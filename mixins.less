@@ -1,5 +1,39 @@
+/* Reset padding and margin */
+.resetPM(){
+	padding: 0;
+	margin: 0;
+}
+/* RGBA */
+.brgba(@r:0,@g:0,@b:0,@a:1){
+	background:rgba(@r,@g,@b,@a);
+	.ie8 &, .ie7 &{
+		background:rgb(@r,@g,@b);
+	}
+}
+.bgkAlpha(@color: #000000, @a:1){
+	@p: @a*100;
+	background-color: @color;
+	background-color: fade(@color,@p);	
+}
+/* inline-block hack */
+.inline-block(){
+    display: inline-block;
+    .ie8 &, .ie7 &{
+        zoom:1;
+        *display:inline;
+    }
+   
+}
+// Size handler
+.size(@w:10px, @h: 10px){
+    width: @w;
+    height: @h;
+}
+
+// font handler
 .font(@name:'Arial',@weight:'400', @fallback: "helvetica, sans-serif"){
 	font-family: @name, @fallback;
+	font-weight:@weight;
 }
 
 /* Box Sizing */
