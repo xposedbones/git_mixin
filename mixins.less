@@ -1,15 +1,11 @@
+@import "_lesshat.less";
+
 /* Reset padding and margin */
 .resetPM(){
 	padding: 0;
 	margin: 0;
 }
-/* RGBA */
-.brgba(@r:0,@g:0,@b:0,@a:1){
-	background:rgba(@r,@g,@b,@a);
-	.ie8 &, .ie7 &{
-		background:rgb(@r,@g,@b);
-	}
-}
+
 .bgkAlpha(@color: #000000, @a:1){
 	@p: @a*100;
 	background-color: @color;
@@ -29,7 +25,10 @@
     width: @w;
     height: @h;
 }
-
+.square(@w:10px){
+    width: @w;
+    height: @w;
+}
 // font handler
 .font(@name:'Arial',@weight:'400', @fallback: "helvetica, sans-serif"){
 	font-family: @name, @fallback;
@@ -50,20 +49,20 @@
 }
 /* Collumn */
 .col(@nbCol:3,@gutter: 20px, @width:989px){
-		@totalWidth:@width;
-		@nth:~"@{nbCol}n+1";
-		
-		width: (@totalWidth - (@gutter * (@nbCol - 1))) / @nbCol;
-		margin-left: @gutter;
-		margin-bottom: @gutter;
-		float:left;
-		&:first-child{
-			margin-left: 0px;
-		}
-		&:nth-child(@nth){
-			margin-left:0px;
-		}
+	@totalWidth:@width;
+	@nth:~"@{nbCol}n+1";
+	
+	width: (@totalWidth - (@gutter * (@nbCol - 1))) / @nbCol;
+	margin-left: @gutter;
+	margin-bottom: @gutter;
+	float:left;
+	&:first-child{
+		margin-left: 0px;
 	}
+	&:nth-child(@nth){
+		margin-left:0px;
+	}
+}
 
 .anchorPoint(@x: left, @y: top){
 	transform-origin: @x @y;
@@ -174,13 +173,13 @@
 
 	}
 
-/* gradient */
+/* gradient */ //REQUIRE LESSHAT
 	.gradient (@origin: left, @start: #ffffff, @stop: #000000) {
 		// @gradientType: 1;
 		// @gradientType: ~`if( @origin==="top" ) {return 0}`;
 
 		background-color: @start;
-	
+		.gradient-hat(~"linear-gradient(@{origin}, @{start} 0%, @{stop} 100%)");
 		background-image: -webkit-linear-gradient(@origin, @start, @stop);
 		background-image: -moz-linear-gradient(@origin, @start, @stop);
 		background-image: -o-linear-gradient(@origin, @start, @stop);
@@ -188,6 +187,7 @@
 		background-image: linear-gradient(@origin, @start, @stop);
 		// filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=@start, endColorstr=@stop,GradientType=0);
 		  filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start,@stop));
+		  .ie9 &{filter:none;}
 	}
  
 /* quick-gradient */
@@ -224,3 +224,28 @@
 		-webkit-filter: @filter(@amount);
 	}
 
+
+/* FlexBox
+=================================================================== */
+	.flex-Box(@align:center,@orient:vertical,@pack:center){
+			display: -webkit-box;
+				display: -moz-box;
+				display: -o-box;
+				display: -ms-box;
+				display: box;
+				-webkit-box-align:@align;
+				-webkit-box-orient:@orient;
+				-webkit-box-pack: @pack;
+				-moz-box-align: @align;
+				-moz-box-orient: @orient;
+				-moz-box-pack: @pack;
+				-o-box-align:@align;
+				-o-box-orient:@orient;
+				-o-box-pack: @pack;
+				-ms-box-align:@align;
+				-ms-box-orient:@orient;
+				-ms-box-pack: @pack;
+				box-align:@align;
+				box-orient:@orient;
+				box-pack: @pack;
+	}
